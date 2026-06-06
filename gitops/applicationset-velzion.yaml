@@ -9,7 +9,7 @@ spec:
     - list:
         elements:
           - app: velzion
-            path: velzion-app   # Path to your Helm chart in the VELZION-GITOPS repo
+            path: .   # Path to your Helm chart in the VELZION-GITOPS repo
             targetNamespace: default # Keeps this aligned with the Ingress we just built
           
   # Template for generating the ArgoCD Application CR
