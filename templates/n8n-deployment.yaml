@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: n8n
+spec:
+  serviceName: "n8n"
+  replicas: {{ .Values.n8n.replicaCount }}
+  selector:
+    matchLabels:
+      app: n8n
+  template:
+    metadata:
+      labels:
+        app: n8n
+    spec:
+      # serviceAccountName: n8n-aws-role  <-- We will uncomment this in Phase 5 when we setup AWS IRSA for Terraform
+      containers:
+        - name: n8n
+          image: "{{ .Values.n8n.image }}:{{ .Values.n8n.tag }}"
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5678
+          env:
+            - name: N8N_HOST
+              value: "localhost"
+            - name: N8N_PORT
+              value: "5678"
+            - name: N8N_PROTOCOL
+              value: "http"
+            - name: WEBHOOK_URL
+              value: "http://{{ .Values.global.domain }}/n8n/"
+            - name: N8N_PATH
+              value: "/n8n/"
+            - name: N8N_EDITOR_BASE_URL
+              value: "http://{{ .Values.global.domain }}/n8n/"
+            - name: N8N_SECURE_COOKIE
+              value: "false"
+            - name: AWS_ENABLE_SYSTEM_CREDENTIALS
+              value: "true"
+          volumeMounts:
+            - name: n8n-data
+              mountPath: /home/node/.n8n
+  volumeClaimTemplates:
+    - metadata:
+        name: n8n-data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: {{ .Values.n8n.storageSize }}

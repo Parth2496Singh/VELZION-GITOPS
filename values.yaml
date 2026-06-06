@@ -1,0 +1,30 @@
+global:
+  domain: "velzion.dev"  # Replace with your Route 53 domain later
+
+database:
+  replicaCount: 1
+  image: "postgres:16-alpine"
+  dbName: "velzion_db"
+  user: "velzion_admin"
+  password: "supersecure_db_password_123"
+  storageSize: "10Gi"
+
+backend:
+  replicaCount: 2
+  image: "parthsingh2496/velzion-backend"
+  tag: "27" # Will be overridden dynamically by Jenkins/Argo Image Updater
+  debug: "True"
+  githubClientId: "Ov23liuC4W9n3WVrHOqM"
+  githubClientSecret: "7d751ed6a65910820618cc83e0f5a3710b592dfe"
+  n8nWebhookSecret: "L0JFLBRiyyWiCatJeju2IHXOm-yQUFuhSzjflv8q_a8SgeDP9SoKNeRmyE_xyCre5lZ0TpREAdxbK37q84IjfA"
+
+frontend:
+  replicaCount: 2
+  image: "parthsingh2496/velzion-frontend"
+  tag: "40"
+
+n8n:
+  replicaCount: 1
+  image: "parthsingh2496/velzion-n8n"
+  tag: "1.0.2"
+  storageSize: "5Gi"

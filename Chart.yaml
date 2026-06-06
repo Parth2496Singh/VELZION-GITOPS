@@ -1,0 +1,6 @@
+apiVersion: v2
+name: velzion-app
+description: A production Helm chart for the Velzion multi-tier platform
+type: application
+version: 1.0.0
+appVersion: "1.0"
