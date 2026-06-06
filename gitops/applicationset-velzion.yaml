@@ -1,0 +1,43 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: applicationset-velzion
+  namespace: argocd
+spec:
+  # The list generator enumerates our Velzion application
+  generators:
+    - list:
+        elements:
+          - app: velzion
+            path: velzion-app   # Path to your Helm chart in the VELZION-GITOPS repo
+            targetNamespace: default # Keeps this aligned with the Ingress we just built
+          
+  # Template for generating the ArgoCD Application CR
+  template:
+    metadata:
+      name: '{{app}}-production'
+      annotations:
+        # Subscribe to notifications using your provided email
+        notifications.argoproj.io/subscribe.on-health-degraded.email: "cosmicshogun69@gmail.com"
+        notifications.argoproj.io/subscribe.on-deployed.email: "cosmicshogun69@gmail.com"
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/Parth2496Singh/VELZION-GITOPS.git
+        targetRevision: main
+        path: '{{path}}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{targetNamespace}}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+      ignoreDifferences:
+          # Ignore replica differences so K8s HPAs (Horizontal Pod Autoscalers) do not conflict with ArgoCD
+          - group: apps
+            kind: Deployment
+            jsonPointers:
+              - /spec/replicas
