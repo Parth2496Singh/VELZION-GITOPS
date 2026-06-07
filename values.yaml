@@ -12,7 +12,7 @@ database:
 backend:
   replicaCount: 2
   image: "parthsingh2496/velzion-backend"
-  tag: "v1.0.27" # Will be overridden dynamically by Jenkins/Argo Image Updater
+  tag: "1.0.27" # Will be overridden dynamically by Jenkins/Argo Image Updater
   debug: "True"
   githubClientId: "Ov23liuC4W9n3WVrHOqM"
   githubClientSecret: "7d751ed6a65910820618cc83e0f5a3710b592dfe"
@@ -21,10 +21,10 @@ backend:
 frontend:
   replicaCount: 2
   image: "parthsingh2496/velzion-frontend"
-  tag: "v1.0.40"
+  tag: "1.0.40"
 
 n8n:
   replicaCount: 1
   image: "parthsingh2496/velzion-n8n"
-  tag: "v1.0.2"
+  tag: "1.0.2"
   storageSize: "5Gi"
