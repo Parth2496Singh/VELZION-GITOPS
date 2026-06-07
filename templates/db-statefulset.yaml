@@ -7,27 +7,12 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: db
+      app: db  # <--- THIS MUST MATCH THE TEMPLATE BELOW
   template:
+    metadata:
+      labels:
+        app: db  # <--- THIS MUST MATCH THE SELECTOR ABOVE
     spec:
       containers:
         - name: postgres
-          image: postgres:15
-          env:
-            - name: POSTGRES_DB
-              value: velzion_db
-            - name: POSTGRES_USER
-              value: user
-            - name: POSTGRES_PASSWORD
-              value: password
-          volumeMounts:
-            - name: postgres-data
-              mountPath: /var/lib/postgresql/data
-  volumeClaimTemplates:
-    - metadata:
-        name: postgres-data
-      spec:
-        accessModes: [ "ReadWriteOnce" ]
-        resources:
-          requests:
-            storage: 2Gi
+          # ... (rest of config)
