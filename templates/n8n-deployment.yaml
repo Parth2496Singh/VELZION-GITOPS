@@ -48,6 +48,10 @@ spec:
               value: "false"
             - name: AWS_ENABLE_SYSTEM_CREDENTIALS
               value: "true"
+            - name: N8N_PATH
+              value: "/n8n/"
+            - name: WEBHOOK_URL
+              value: "http://a78919bbb223c44038317445f05dbd66-b8f72485f8fefd90.elb.us-east-1.amazonaws.com/n8n/"
           volumeMounts:
             - name: n8n-data
               mountPath: /home/node/.n8n
