@@ -1,5 +1,5 @@
 global:
-  domain: "a78919bbb223c44038317445f05dbd66-b8f72485f8fefd90.elb.us-east-1.amazonaws.com"  # Replace with your Route 53 domain later
+  domain: "52.206.225.45" # Replace with your Route 53 domain later
 
 database:
   replicaCount: 1
