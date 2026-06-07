@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: backend
 spec:
-  replicas: {{ .Values.backend.replicaCount }}
+  replicas: 1
   selector:
     matchLabels:
       app: backend
@@ -15,28 +15,11 @@ spec:
       containers:
         - name: backend
           image: "{{ .Values.backend.image }}:{{ .Values.backend.tag }}"
-          imagePullPolicy: Always
-          ports:
-            - containerPort: 8000
           env:
-            env:
             - name: DATABASE_URL
               value: "postgres://{{ .Values.database.user }}:{{ .Values.database.password }}@db:5432/{{ .Values.database.dbName }}"
-            - name: DJANGO_SETTINGS_MODULE
-              value: "core.settings"
-            - name: DJANGO_DEBUG
-              value: {{ .Values.backend.debug | quote }}
-            - name: DJANGO_ALLOWED_HOSTS
-              value: "*"
-            # Updated to include the new NodePort 30768
             - name: CORS_ALLOWED_ORIGINS
-              value: "http://{{ .Values.global.domain }}:30768"
-            - name: GITHUB_CLIENT_ID
-              value: {{ .Values.backend.githubClientId | quote }}
-            - name: GITHUB_CLIENT_SECRET
-              value: {{ .Values.backend.githubClientSecret | quote }}
-            # Updated to include the new NodePort 30768
+              value: "http://54.86.145.100:30768"
             - name: FRONTEND_URL
-              value: "http://{{ .Values.global.domain }}:30768"
-            - name: N8N_WEBHOOK_SECRET
-              value: {{ .Values.backend.n8nWebhookSecret | quote }}
+              value: "http://54.86.145.100:30768"
+            # Add other existing vars here...
