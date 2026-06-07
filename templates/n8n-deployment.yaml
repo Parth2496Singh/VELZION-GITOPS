@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: StatefulSet
+kind: StatefulSet # or Deployment
 metadata:
   name: n8n
 spec:
@@ -7,25 +7,12 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: n8n
+      app: n8n  # <--- THIS MUST MATCH THE TEMPLATE BELOW
   template:
+    metadata:
+      labels:
+        app: n8n  # <--- THIS MUST MATCH THE SELECTOR ABOVE
     spec:
       containers:
         - name: n8n
-          image: "{{ .Values.n8n.image }}:{{ .Values.n8n.tag }}"
-          env:
-            - name: WEBHOOK_URL
-              value: "http://54.86.145.100:30768/n8n/"
-            - name: N8N_EDITOR_BASE_URL
-              value: "http://54.86.145.100:30768/n8n/"
-          volumeMounts:
-            - name: n8n-data
-              mountPath: /home/node/.n8n
-  volumeClaimTemplates:
-    - metadata:
-        name: n8n-data
-      spec:
-        accessModes: [ "ReadWriteOnce" ]
-        resources:
-          requests:
-            storage: 1Gi
+          # ... (rest of config)
