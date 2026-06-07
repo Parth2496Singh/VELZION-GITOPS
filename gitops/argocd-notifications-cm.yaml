@@ -7,7 +7,7 @@ data:
   # Context section: defines variables available in notification templates
   context: |
     # REPLACE <YOUR_MASTER_EC2_PUBLIC_IP> so the email links route correctly!
-    argocdUrl: "http://3.92.132.235:10000"  
+    argocdUrl: "http://localhost:10000"
 
   # Email service configuration: SMTP settings for sending emails
   service.email: |
