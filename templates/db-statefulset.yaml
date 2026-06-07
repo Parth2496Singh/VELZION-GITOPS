@@ -4,29 +4,22 @@ metadata:
   name: db
 spec:
   serviceName: "db"
-  replicas: {{ .Values.database.replicaCount }}
+  replicas: 1
   selector:
     matchLabels:
       app: db
   template:
-    metadata:
-      labels:
-        app: db
     spec:
       containers:
         - name: postgres
-          image: {{ .Values.database.image }}
-          ports:
-            - containerPort: 5432
+          image: postgres:15
           env:
             - name: POSTGRES_DB
-              value: {{ .Values.database.dbName }}
+              value: velzion_db
             - name: POSTGRES_USER
-              value: {{ .Values.database.user }}
+              value: user
             - name: POSTGRES_PASSWORD
-              value: {{ .Values.database.password }}
-            - name: PGDATA
-              value: /var/lib/postgresql/data/pgdata
+              value: password
           volumeMounts:
             - name: postgres-data
               mountPath: /var/lib/postgresql/data
@@ -37,4 +30,4 @@ spec:
         accessModes: [ "ReadWriteOnce" ]
         resources:
           requests:
-            storage: {{ .Values.database.storageSize }}
+            storage: 2Gi
