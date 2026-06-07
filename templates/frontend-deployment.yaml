@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: frontend
 spec:
-  replicas: {{ .Values.frontend.replicaCount }}
+  replicas: 1
   selector:
     matchLabels:
       app: frontend
@@ -15,10 +15,8 @@ spec:
       containers:
         - name: frontend
           image: "{{ .Values.frontend.image }}:{{ .Values.frontend.tag }}"
-          imagePullPolicy: Always
-          ports:
-            - containerPort: 80
-          # Ensure this variable is present and updated
           env:
             - name: VITE_API_URL
-              value: "http://{{ .Values.global.domain }}:30768/api/"
+              value: "http://54.86.145.100:30768/api/"
+          ports:
+            - containerPort: 80
