@@ -18,3 +18,7 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 80
+          # Ensure this variable is present and updated
+          env:
+            - name: VITE_API_URL
+              value: "http://{{ .Values.global.domain }}:30768/api/"
